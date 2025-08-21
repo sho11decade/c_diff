@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>間違い探し生成アプリ</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="static/js/main.js" defer></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
 </head>
 <body>
     <!-- ヘッダーセッション -->
@@ -37,9 +37,18 @@
     <footer class="app-footer" role="contentinfo">
         <div class="copyright">&copy; 2025 間違い探し生成アプリ</div>
         <div class="sns-share">
-            <button class="sns-btn" aria-label="Xで共有">X</button>
-            <button class="sns-btn" aria-label="Facebookで共有">Facebook</button>
-            <button class="sns-btn" aria-label="LINEで共有">LINE</button>
+            <button class="sns-btn sns-x" aria-label="Xで共有">
+                <img src="img/x-icon.svg" alt="" class="sns-icon" aria-hidden="true">
+                <span class="sns-label">Xで共有</span>
+            </button>
+            <button class="sns-btn sns-facebook" aria-label="Facebookで共有">
+                <img src="img/facebook-icon.svg" alt="" class="sns-icon" aria-hidden="true">
+                <span class="sns-label">Facebookで共有</span>
+            </button>
+            <button class="sns-btn sns-line" aria-label="LINEで共有">
+                <img src="img/line-icon.svg" alt="" class="sns-icon" aria-hidden="true">
+                <span class="sns-label">LINEで共有</span>
+            </button>
         </div>
     </footer>
 </body>
