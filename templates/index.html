@@ -4,13 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>間違い探し生成アプリ</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="static/js/main.js" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    <!-- ファビコン設定 -->
+    <link rel="icon" type="image/icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
 </head>
 <body>
     <!-- ヘッダーセッション -->
     <header class="app-header" role="banner">
         <div class="header-title">間違い探し生成アプリ</div>
+        <nav class="header-nav">
+            <a href="help.html" class="help-link" aria-label="ヘルプページ">
+                <img src="{{ url_for('static', filename='images/help_icon.svg') }}" alt="" class="help-icon" aria-hidden="true" style="width:1.2em;height:1.2em;vertical-align:middle;margin-right:4px;">
+                ヘルプ
+            </a>
+        </nav>
     </header>
 
     <!-- メインセッション -->
@@ -26,7 +35,14 @@
             </div>
         </section>
         <section class="settings-section" id="settings-section">
+            <!-- 吹き出し（使い方ガイド） -->
+            <div class="slider-tooltip" id="slider-tooltip" role="note" aria-live="polite">
+                難易度を調整できます。数字が大きいほど難しくなります。
+            </div>
             <!-- 処理設定オプション（必要に応じて拡張） -->
+            <input type="range" id="difficulty-slider" min="1" max="5" value="3" aria-label="難易度設定">
+            <label for="difficulty-slider" class="slider-label">難易度:</label>
+            <span class="slider-value" id="slider-value">3</span>
         </section>
         <section class="process-section">
             <button class="process-btn" id="process-btn" type="button">処理開始</button>
@@ -36,11 +52,6 @@
     <!-- フッターセッション -->
     <footer class="app-footer" role="contentinfo">
         <div class="copyright">&copy; 2025 間違い探し生成アプリ</div>
-        <div class="sns-share">
-            <button class="sns-btn" aria-label="Xで共有">X</button>
-            <button class="sns-btn" aria-label="Facebookで共有">Facebook</button>
-            <button class="sns-btn" aria-label="LINEで共有">LINE</button>
-        </div>
     </footer>
 </body>
 </html>

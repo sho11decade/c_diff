@@ -40,18 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.files && e.target.files[0]) handleFile(e.target.files[0]);
   });
 
-  // ファイル処理・プレビュー
-  function handleFile(file) {
-    if (!file.type.startsWith('image/')) {
-      previewArea.innerHTML = '<span style="color:red">画像ファイルを選択してください</span>';
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      previewArea.innerHTML = `<img src="${e.target.result}" alt="プレビュー画像" style="max-width:100%;max-height:240px;border-radius:8px;">`;
-    };
-    reader.readAsDataURL(file);
-  }
   // スライダーの値を表示
   const difficultySlider = document.getElementById('difficulty-slider');
   const sliderValue = document.getElementById('slider-value');
@@ -76,36 +64,65 @@ document.addEventListener('DOMContentLoaded', () => {
     uploadArea.style.borderColor = '';
   });
 
-  // 処理開始ボタン（ダミー）
+  // 処理開始ボタン（ファイル選択時のみ有効化）
   const processBtn = document.getElementById('process-btn');
-  if (processBtn) {
-    processBtn.addEventListener('click', () => {
-      alert('画像処理を開始します（機能は未実装）');
-    });
-  }
-
-  // SNS共有ボタンの動作実装
-  document.querySelectorAll('.sns-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const url = location.href;
-      const text = '間違い探し生成アプリで画像をアップロードしました！';
-      let shareUrl = '';
-      switch (btn.getAttribute('aria-label')) {
-        case 'Xで共有':
-          shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
-          break;
-        case 'Facebookで共有':
-          shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-          break;
-        case 'LINEで共有':
-          shareUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}`;
-          break;
-        default:
-          alert('未対応のSNSです');
-          return;
+  let fileSelected = false;
+  
+  processBtn.addEventListener('click', async () => {
+    if (!fileSelected) return;
+    
+    const formData = new FormData();
+    const file = fileInput.files[0];
+    const difficulty = difficultySlider ? difficultySlider.value : 5;
+    
+    formData.append('file', file);
+    formData.append('difficulty', difficulty);
+    
+    try {
+      processBtn.disabled = true;
+      processBtn.textContent = '処理中...';
+      
+      const response = await fetch('/upload', {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        console.log('アップロード成功:', result);
+      } else {
+        console.error('アップロード失敗:', response.statusText);
       }
-      window.open(shareUrl, '_blank', 'noopener,noreferrer');
-    });
+    } catch (error) {
+      console.error('エラー:', error);
+    } finally {
+      processBtn.disabled = false;
+      processBtn.textContent = '処理開始';
+    }
   });
 
+  function setProcessBtnState(enabled) {
+    if (processBtn) {
+      processBtn.disabled = !enabled;
+      processBtn.style.opacity = enabled ? '1' : '0.5';
+      processBtn.style.pointerEvents = enabled ? 'auto' : 'none';
+    }
+  }
+  setProcessBtnState(false);
+
+  function handleFile(file) {
+    if (!file.type.startsWith('image/')) {
+      previewArea.innerHTML = '<span style="color:red">画像ファイルを選択してください</span>';
+      fileSelected = false;
+      setProcessBtnState(false);
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      previewArea.innerHTML = `<img src="${e.target.result}" alt="プレビュー画像" style="max-width:100%;max-height:240px;border-radius:8px;">`;
+      fileSelected = true;
+      setProcessBtnState(true);
+    };
+    reader.readAsDataURL(file);
+  }
 });

@@ -276,6 +276,29 @@ input[type="range"]:focus::-ms-fill-lower,
 input[type="range"]:focus::-ms-fill-upper {
   background: #c0e6f8;
 }
+.slider-tooltip {
+  background: #fff;
+  color: #222;
+  border: 2px solid var(--color-theme);
+  border-radius: 16px;
+  padding: 8px 16px;
+  font-size: var(--font-size-sm);
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(39,146,195,0.08);
+  position: relative;
+  max-width: 320px;
+  text-align: center;
+}
+.slider-tooltip::before {
+  content: "";
+  position: absolute;
+  left: 32px;
+  bottom: -12px;
+  border-width: 12px 12px 0 12px;
+  border-style: solid;
+  border-color: var(--color-theme) transparent transparent transparent;
+  display: block;
+}
 @media (max-width: 600px) {
   .app-main {
     max-width: 98vw;
