@@ -33,15 +33,21 @@ body {
   padding: var(--space) var(--space-sm);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* ←中央揃え */
+  position: relative;
 }
 .header-title {
   font-size: var(--font-size-lg);
   font-weight: bold;
   text-align: center;
-  flex: 1;
+  flex: none;
+  margin: 0 auto;
 }
 .header-nav {
+  position: absolute;
+  right: var(--space-sm);
+  top: 50%;
+  transform: translateY(-50%);
   min-width: 100px;
   text-align: right;
 }
@@ -49,7 +55,23 @@ body {
   color: var(--color-header);
   font-size: var(--font-size-sm);
   text-decoration: underline;
-  padding: 0 8px;
+  padding: 4px 12px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.help-link:focus,
+.help-link:hover {
+  background: rgba(255,255,255,0.15);
+  text-decoration: none;
+}
+.help-icon {
+  width: 1.2em;
+  height: 1.2em;
+  margin-right: 4px;
+  vertical-align: middle;
+  display: inline-block;
 }
 .app-main {
   max-width: 600px;
@@ -114,6 +136,11 @@ body {
 }
 .settings-section {
   margin-bottom: var(--space);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 .process-section {
   text-align: center;
@@ -159,6 +186,95 @@ body {
 .sns-btn:focus,
 .sns-btn:hover {
   background: var(--color-accent);
+}
+/* スライダー（range input）のスタイル */
+input[type="range"] {
+  width: 60%;
+  max-width: 300px;
+  margin: 0 12px 0 0;
+  accent-color: var(--color-theme);
+  height: 2.2em;
+  background: transparent;
+  vertical-align: middle;
+}
+
+.slider-label {
+  font-size: var(--font-size-md);
+  margin-right: 8px;
+}
+
+.slider-value {
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  color: var(--color-accent);
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+/* スライダーのつまみ・トラックを大きくしてタッチ操作しやすく */
+input[type="range"]::-webkit-slider-thumb {
+  width: 28px;
+  height: 28px;
+  background: var(--color-theme);
+  border-radius: 50%;
+  border: 2px solid var(--color-accent);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+input[type="range"]:focus::-webkit-slider-thumb {
+  background: var(--color-accent);
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+input[type="range"]:focus::-webkit-slider-runnable-track {
+  background: #c0e6f8;
+}
+
+/* Firefox対応 */
+input[type="range"]::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  background: var(--color-theme);
+  border-radius: 50%;
+  border: 2px solid var(--color-accent);
+  cursor: pointer;
+}
+input[type="range"]:focus::-moz-range-thumb {
+  background: var(--color-accent);
+}
+input[type="range"]::-moz-range-track {
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+input[type="range"]:focus::-moz-range-track {
+  background: #c0e6f8;
+}
+
+/* Edge対応 */
+input[type="range"]::-ms-thumb {
+  width: 28px;
+  height: 28px;
+  background: var(--color-theme);
+  border-radius: 50%;
+  border: 2px solid var(--color-accent);
+  cursor: pointer;
+}
+input[type="range"]:focus::-ms-thumb {
+  background: var(--color-accent);
+}
+input[type="range"]::-ms-fill-lower,
+input[type="range"]::-ms-fill-upper {
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+input[type="range"]:focus::-ms-fill-lower,
+input[type="range"]:focus::-ms-fill-upper {
+  background: #c0e6f8;
 }
 @media (max-width: 600px) {
   .app-main {

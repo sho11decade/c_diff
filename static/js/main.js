@@ -52,6 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     reader.readAsDataURL(file);
   }
+  // スライダーの値を表示
+  const difficultySlider = document.getElementById('difficulty-slider');
+  const sliderValue = document.getElementById('slider-value');
+  if (difficultySlider && sliderValue) {
+    // 初期値表示
+    sliderValue.textContent = difficultySlider.value;
+    // 値変更時に表示を更新
+    difficultySlider.addEventListener('input', () => {
+      sliderValue.textContent = difficultySlider.value;
+    });
+  }
 
   // アクセシビリティ: dragover時の視覚効果
   uploadArea.addEventListener('dragover', e => {
