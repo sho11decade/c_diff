@@ -15,7 +15,7 @@
     <header class="app-header" role="banner">
         <div class="header-title">間違い探し生成アプリ</div>
         <nav class="header-nav">
-            <a href="help.html" class="help-link" aria-label="ヘルプページ">
+            <a href="{{ url_for('help') }}" class="help-link" aria-label="ヘルプページ">
                 <img src="{{ url_for('static', filename='images/help_icon.svg') }}" alt="" class="help-icon" aria-hidden="true" style="width:1.2em;height:1.2em;vertical-align:middle;margin-right:4px;">
                 ヘルプ
             </a>

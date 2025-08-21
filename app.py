@@ -23,6 +23,15 @@ def upload():
 
     return 'アップロード完了'
 
+@app.route('/config_info', methods=['POST'])
+def config_info():
+    difficulty = request.form.get('difficulty', default=5, type=int)
+    return {'difficulty': difficulty}
+
+@app.route('/help')
+def help():
+    return render_template('help.html')
+
 @app.route('/')
 def index():
     return render_template('index.html')

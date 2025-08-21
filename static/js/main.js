@@ -70,28 +70,42 @@ document.addEventListener('DOMContentLoaded', () => {
   
   processBtn.addEventListener('click', async () => {
     if (!fileSelected) return;
-    
+
     const formData = new FormData();
     const file = fileInput.files[0];
     const difficulty = difficultySlider ? difficultySlider.value : 5;
-    
+
     formData.append('file', file);
     formData.append('difficulty', difficulty);
-    
+
     try {
       processBtn.disabled = true;
       processBtn.textContent = '処理中...';
-      
-      const response = await fetch('/upload', {
+
+      // ファイルアップロード
+      const uploadResponse = await fetch('/upload', {
         method: 'POST',
         body: formData
       });
-      
-      if (response.ok) {
-        const result = await response.json();
-        console.log('アップロード成功:', result);
+
+      if (uploadResponse.ok) {
+        // 難易度設定を /config_info に送信
+        const configResponse = await fetch('/config_info', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `difficulty=${encodeURIComponent(difficulty)}`
+        });
+        if (configResponse.ok) {
+          const configResult = await configResponse.json();
+          console.log('難易度設定送信成功:', configResult);
+        } else {
+          console.error('難易度設定送信失敗:', configResponse.statusText);
+        }
+        // アップロード結果の表示など（必要に応じて）
+        // const result = await uploadResponse.json();
+        // console.log('アップロード成功:', result);
       } else {
-        console.error('アップロード失敗:', response.statusText);
+        console.error('アップロード失敗:', uploadResponse.statusText);
       }
     } catch (error) {
       console.error('エラー:', error);
