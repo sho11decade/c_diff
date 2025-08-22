@@ -3,15 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ヘルプ</title>
+    <title>ヘルプ | 間違い探し生成アプリ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/help-page.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
 </head>
 <body>
-    <h1>ヘルプ</h1>
-    <p>このアプリケーションの使い方についてのヘルプです。</p>
-    <ul>
-        <li>ファイルのアップロード方法</li>
-        <li>設定の変更方法</li>
-        <li>トラブルシューティング</li>
-    </ul>
+    <header class="help-header" role="banner">
+        <nav class="help-nav">
+            <a href="{{ url_for('index') }}" class="help-nav-link" aria-label="トップへ">
+                <img src="{{ url_for('static', filename='images/home-icon.svg') }}" alt="" class="help-nav-icon" aria-hidden="true">
+                トップへ戻る
+            </a>
+        </nav>
+        <h1 class="help-title">ヘルプ</h1>
+    </header>
+    <main class="help-main" role="main">
+        <section class="help-section">
+            <p>このアプリケーションの使い方についてのヘルプです。</p>
+            <ul class="help-list">
+                <li>ファイルのアップロード方法</li>
+                <p></p>
+                <li>設定の変更方法</li>
+                <li>トラブルシューティング</li>
+            </ul>
+        </section>
+    </main>
+    <footer class="help-footer" role="contentinfo">
+        <small>&copy; 2025 間違い探し生成アプリ</small>
+    </footer>
 </body>
 </html>
